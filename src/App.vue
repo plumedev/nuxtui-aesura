@@ -2,10 +2,10 @@
 
 <template>
   <UApp>
-    <div v-if="isLoggedIn" >
-      <UButton icon="i-lucide-log-out" variant="outlined" @click="handleSignOut">Se déconnecter</UButton>
-    </div>
     <div class="w-screen h-screen">
+      <div v-if="isLoggedIn" >
+        <UButton icon="i-lucide-log-out" variant="outlined" @click="handleSignOut">Se déconnecter</UButton>
+      </div>
       <RouterView />
     </div>
   </UApp>
