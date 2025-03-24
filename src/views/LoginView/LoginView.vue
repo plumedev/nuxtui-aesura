@@ -32,50 +32,26 @@
 </template>
 
 <script setup lang="ts">
-import router from "@/router";
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useRouter } from "vue-router";
+import { useAuthStore } from '@/stores/auth'
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import { ref } from 'vue';
 
 const show = ref(false)
-const email = ref('')
 const password = ref('')
-const errMsg = ref()
 
-const register = () =>  {
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, email.value, password.value)
-    .then((data) => {
-        data
-        console.log("Successfully sign in!");
-        router.push('/');
-    })
-    .catch((error) => {
-        console.log(error.code);
-        switch (error.code) {
-            case "auth/invalid-email":
-                errMsg.value = "Invalid email";
-                break;
-            case "auth/user-not-found":
-                errMsg.value = "No account with that email was found";
-                break;
-            case "auth/wrong-password":
-                errMsg.value = "Incorrect password";
-                break;
-            default:
-                errMsg.value = "Email or password was incorrect";
-                break;
-        }
-        alert(error.message);
-    }
-    )
-};
+const router = useRouter();
+
+
 
 const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(getAuth(), provider)
         .then(() => {
             router.push("/home");
+            const authStore = useAuthStore();
+            authStore.loggedIn = true;
         })
         .catch((error) => {
             console.log(error.message)

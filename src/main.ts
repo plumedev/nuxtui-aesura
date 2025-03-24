@@ -10,20 +10,21 @@ import ui from '@nuxt/ui/vue-plugin'
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { VueFire } from 'vuefire';
+import { VueFire, type VueFireOptions } from 'vuefire';
 import { firebaseConfig } from '@/firebase';
 
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
 const app = createApp(App)
+const pinia = createPinia()
 
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
 app.use(ui)
 app.use(VueFire, {
     // imported above but could also just be created here
-    firebase,
+    firebaseApp: firebase,
     modules: [],
-  } as any);
+  } as VueFireOptions);
 
 app.mount('#app')
