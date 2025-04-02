@@ -16,8 +16,9 @@ import { firebaseConfig } from '@/firebase';
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
 const app = createApp(App)
+const pinia = createPinia()
 
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
 app.use(ui)
 app.use(VueFire, {
