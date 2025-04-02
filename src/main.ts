@@ -22,7 +22,6 @@ app.use(pinia)
 app.use(router)
 app.use(ui)
 app.use(VueFire, {
-    // imported above but could also just be created here
     firebaseApp: firebase,
     modules: [],
   } as VueFireOptions);
